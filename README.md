@@ -1,2 +1,4 @@
-# WindowLayer.jl
-Abstraction layer for window/graphical context managers &amp; libraries such as GLFW
+# GLFWAbstraction.jl
+Abstraction layer for [GLFW.jl](https://github.com/JuliaGL/GLFW.jl).
+
+This README will be augmented with usage information soon.

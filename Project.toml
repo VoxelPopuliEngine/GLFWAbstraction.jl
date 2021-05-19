@@ -1,0 +1,14 @@
+name = "GLFWAbstraction"
+uuid = "b4519675-ec9c-4dd5-a759-fbb42bea0e46"
+authors = ["Kiruse <contact@kiruse.dev>"]
+version = "0.1.0"
+
+[deps]
+ExtraFun = "963d7961-7533-4a80-bf6b-d3653d506006"
+GLFW = "f7f18e0c-5ee9-5ccd-a5bf-e8befd85ed98"
+GenerateProperties = "ad744131-fa5b-4912-8d03-4395d7e5240b"
+
+[compat]
+ExtraFun = "1.5.2"
+GLFW = "3.4.1"
+julia = "1.6"
