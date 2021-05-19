@@ -11,4 +11,5 @@ GenerateProperties = "ad744131-fa5b-4912-8d03-4395d7e5240b"
 [compat]
 ExtraFun = "1.5.2"
 GLFW = "3.4.1"
+GenerateProperties = "0.1"
 julia = "1.6"
