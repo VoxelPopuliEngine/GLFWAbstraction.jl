@@ -6,8 +6,6 @@ using ExtraFun
 using GenerateProperties
 using GLFW
 
-const Optional{T} = Union{T, Nothing}
-
 export WindowEvent, FramebufferSizeEvent, WindowCloseEvent, WindowContentScaleEvent, WindowFocusEvent, WindowIconifyEvent, WindowMaximizeEvent, WindowPosEvent, WindowRefreshEvent, WindowSizeEvent
 """Enum of various window-related events. These are a relatively low-level abstraction used with the
 `register_window_callback` method. However, a more Julian solution exists. Refer to the documentation's *Event System*
@@ -41,6 +39,7 @@ mutable struct Window{L} <: GLFWWrapper{GLFW.Window}
     function Window{L}(handle) where L
         inst = new(handle)
         register_default_window_callbacks(inst)
+        register_default_input_callbacks(inst)
         inst
     end
 end

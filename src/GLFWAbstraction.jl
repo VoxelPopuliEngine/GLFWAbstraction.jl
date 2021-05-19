@@ -4,6 +4,8 @@
 # Licensed under MIT License
 module GLFWAbstraction
 
+const Optional{T} = Union{T, Nothing}
+
 abstract type GLFWWrapper{T} end
 wrapped(w::GLFWWrapper) = w.handle
 wrapped_type(::Type{GLFWWrapper{T}}) where T = T
