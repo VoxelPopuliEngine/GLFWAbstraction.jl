@@ -13,5 +13,6 @@ wrapped_type(::Type{GLFWWrapper{T}}) where T = T
 
 include("./monitors.jl")
 include("./windows.jl")
+include("./input.jl")
 
 end # module GLFWAbstraction

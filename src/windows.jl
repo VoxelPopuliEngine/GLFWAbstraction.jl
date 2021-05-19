@@ -137,9 +137,6 @@ swapbuffers(wnd::Window) = GLFW.SwapBuffers(wnd.handle)
 export request_attention
 request_attention(wnd::Window) = GLFW.RequestWindowAttention(wnd.handle)
 
-export pollevents
-pollevents() = GLFW.PollEvents()
-
 
 macro make_register_window_callback(event, registrar)
     esc(:(register_window_callback(handler, wnd::Window, ::Ident{$event}) = GLFW.$registrar(wnd.handle, handler)))
