@@ -5,7 +5,6 @@
 using ExtraFun
 using GenerateProperties
 using GLFW
-using ..GLFWAbstraction
 
 const Optional{T} = Union{T, Nothing}
 

@@ -3,7 +3,6 @@
 # -----
 # Licensed under MIT License
 using GLFW
-using ..GLFWAbstraction
 
 export VideoMode
 struct VideoMode
