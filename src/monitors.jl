@@ -8,7 +8,7 @@ export VideoMode
 struct VideoMode
     width::Int
     height::Int
-    bits::NamedTuple{(:red, :green, :blue)}
+    bits::NamedTuple{(:red, :green, :blue), UInt8}
     refresh_rate::Int
 end
 
@@ -33,4 +33,5 @@ videomode(vidmode::GLFW.VidMode) = VideoMode(vidmode.width, vidmode.height, (red
 videomodes(monitor::Monitor) = videomode.(GLFW.GetVideoModes(monitor.handle))
 
 Base.convert(::Type{GLFW.Monitor}, monitor::Monitor) = monitor.handle
+Base.convert(::Type{GLFW.Monitor}, ::Nothing) = GLFW.Monitor(C_NULL)
 Base.collect(::Type{Monitors}) = collect(Monitor.(GLFW.GetMonitors()))

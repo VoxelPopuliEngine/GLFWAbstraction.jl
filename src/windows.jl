@@ -43,9 +43,9 @@ mutable struct Window{L} <: GLFWWrapper{GLFW.Window}
         inst
     end
 end
-window(label::Symbol, title::AbstractString, width::Integer, height::Integer) = Window{label}(GLFW.CreateWindow(width, height, title))
-window(label::Symbol, title::AbstractString, width::Integer, height::Integer, monitor::Monitor) = Window{label}(GLFW.CreateWindow(width, height, title, monitor.handle))
-window(label::Symbol, title::AbstractString, width::Integer, height::Integer, monitor::Monitor, share::Window) = Window{label}(GLFW.CreateWindow(width, height, title, monitor.handle, share.handle))
+function window(label::Symbol, title::AbstractString, width::Integer, height::Integer, monitor::Optional{Monitor} = nothing, share::Optional{Window} = nothing)
+    Window{label}(GLFW.CreateWindow(width, height, title, convert(GLFW.Monitor, monitor), convert(GLFW.Window, share)))
+end
 
 # Use virtual properties to reduce namespace clutter
 @generate_properties Window begin
@@ -217,3 +217,7 @@ windowhint(hint::UInt32, value::Enum) = windowhint(hint, Integer(value))
 windowhint(hint::UInt32, value) = GLFW.WindowHint(hint, value)
 
 decamelcase(sym::AbstractString) = Symbol(uppercase(replace(sym, r"([a-z])([A-Z])" => s"\1_\2")))
+
+
+Base.convert(::Type{GLFW.Window}, wnd::Window) = wnd.handle
+Base.convert(::Type{GLFW.Window}, ::Nothing) = GLFW.Window(C_NULL)
