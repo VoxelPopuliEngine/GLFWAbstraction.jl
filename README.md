@@ -74,7 +74,7 @@ While the `VideoMode` contains the same information as `GLFW.VidMode`, it arrang
 struct VideoMode
     width::Int
     height::Int
-    bits::NamedTuple{(:red, :green, :blue), UInt8}
+    bits::NamedTuple{(:red, :green, :blue), Tuple{UInt8, UInt8, UInt8}}
     refresh_rate::Int
 end
 ```
