@@ -47,6 +47,8 @@ These abstractions are not implemented for given reasons:
   - [Keyboard Input](#keyboard-input)
     - [Events](#events-1)
   - [Mouse Input](#mouse-input)
+    - [Mouse Interface](#mouse-interface)
+    - [Events](#events-2)
 
 # Documentation
 This preliminary documentation shall provide every information necessary to work with GLFWAbstraction.jl.
@@ -294,12 +296,59 @@ The `special` overload retrieves any key on a standard *US QWERTY* keyboard whic
 ### Events
 The following key input related events exist. One hooks into these by specializing on `ID` in `::Window{ID}`, as passed to `window(:ID, ...)`.
 
-| Event | Trigger |
-| --- | --- |
-| `on_key_press(::Window, ::Key, scancode::Integer, modifiers::ModifierKey)` | Triggered when a key is pressed down. |
-| `on_key_release(::Window, ::Key, scancode::Integer, modifiers::ModifierKey)` | Triggered when a key is released. |
-| `on_key_repeat(::Window, ::Key, scancode::Integer, modifiers::ModifierKey)` | Triggered when a key is held down and trigger's the OS' repeat. |
-| `on_receive_char(::Window, ::Char)` | Triggered when a key stroke produces a unicode character. |
+| Event                                                               | Trigger                                                         |
+| ------------------------------------------------------------------- | --------------------------------------------------------------- |
+| `on_key_press(::Window, ::Key, scancode::Integer, ::ModifierKey)`   | Triggered when a key is pressed down.                           |
+| `on_key_release(::Window, ::Key, scancode::Integer, ::ModifierKey)` | Triggered when a key is released.                               |
+| `on_key_repeat(::Window, ::Key, scancode::Integer, ::ModifierKey)`  | Triggered when a key is held down and trigger's the OS' repeat. |
+| `on_receive_char(::Window, ::Char)`                                 | Triggered when a key stroke produces a unicode character.       |
 
 ## Mouse Input
-*TODO*
+Akin to [Keyboard Input](#keyboard-input) above, mouse input is abstracted through three main interfaces: `MouseButton`, the `Mouse` meta type, and dynamic dispatch-style events. The `MouseButton` struct has the following signatures:
+
+```julia
+MouseButton(idx::Integer)
+MouseButton(name::Symbol)
+```
+
+The underlying GLFW library only supports mouse buttons `1:8`. Any number beyond this range throws an `ArgumentError`.
+
+The three default named mouse buttons are `:left`, `:right`, and `:middle`, representing mouse buttons 1, 2, and 3 respectively. One may introduce new names for convenience by defining:
+
+```julia
+MouseButton(::Ident{:new_button}) = MouseButton(4)
+```
+
+where `:new_button` is to be replaced with your desired name.
+
+### Mouse Interface
+One may poll the state of the mouse at any point by constructing a `Mouse(window)` instance. It exposes two virtual properties and two traits functions. Its properties are:
+
+| Virtual Property | Get                                        | Set                                                   |
+| ---------------: | :----------------------------------------- | :---------------------------------------------------- |
+|       `position` | (unnamed) 2-tuple of `GLFW.GetCursorPos()` | `GLFW.SetCursorPos(wnd, values[1], values[2])`        |
+|           `mode` | `GLFW.GetInputMode(wnd, GLFW.CURSOR)`      | `GLFW.SetInputMode(wnd, GLFW.Cursor, Integer(value))` |
+
+Note that `mode` should be assigned a value from the `CursorMode` enum, which exposes values `CursorDisabled`, `CursorHidden`, and `CursorNormal`. Both *hidden* and *disabled* modes show no cursor image. Difference being *disabled* prompts GLFW to recenter the cursor on the window whereas *hidden* allows it to leave the window. One would thus, for example, use *disabled* to control a 3D camera.
+
+The two global functions are concerned with testing `isbuttondown` and `isbuttonup` on a `Mouse(window)`. Their signatures are as follows:
+
+```julia
+isbuttondown(mouse::Mouse, button::MouseButton)::InputAction
+isbuttonup(  mouse::Mouse, button::MouseButton)::InputAction
+```
+
+The `InputAction` is an enum with values `Press`, `Release`, and `Repeat`; although `Repeat` will never be emitted for mouse buttons.
+
+### Events
+As with keyboard input, various mouse events are triggered:
+
+| Event Signature                                            | Trigger                                                                    |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `on_mouse_move(::Window, xpos, ypos)`                      | Triggered when the mouse is moved while within the confines of the window. |
+| `on_mouse_enter(::Window)`                                 | Triggered when the mouse enters the window area.                           |
+| `on_mouse_leave(::Window)`                                 | Triggered when the mouse leaves the window area.                           |
+| `on_mouse_press(::Window, ::MouseButton, ::ModifierKey)`   | Triggered when a mouse button is pressed down.                             |
+| `on_mouse_release(::Window, ::MouseButton, ::ModifierKey)` | Triggered when a mouse button is released.                                 |
+
+As with any event, one would hook into these by implementing a specialization on `ID` in `Window{ID}` as provided in the call to `window(:ID, ...)`.
