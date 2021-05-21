@@ -45,6 +45,7 @@ These abstractions are not implemented for given reasons:
   - [Input](#input)
     - [Modifier Keys](#modifier-keys)
   - [Keyboard Input](#keyboard-input)
+    - [Events](#events-1)
   - [Mouse Input](#mouse-input)
 
 # Documentation
@@ -270,7 +271,35 @@ end
 ```
 
 ## Keyboard Input
-*TODO*
+Keyboard input has been simplified through a more humanized `Key` wrapper and dynamic dispatch-style events. The `Key` wrapper provides both more human & programmatic access to all `GLFW.KEY_*` constants. Its signatures like as thus:
+
+```julia
+Key(digit::Integer, numpad::Bool = false)
+Key(char::Char)
+Key(special::Symbol)
+```
+
+The `digit` overload retrieves Keys `GLFW.KEY_0` through `GLFW.KEY_9`. It throws an `ArgumentError` if `digit ∉ 0:9`. If `numpad` is true, returns the corresponding `GLFW.KEY_KP_*` instead.
+
+The `char` overload retrieves any key on a standard *US QWERTY* keyboard which produces a character. As with the `digit` overload, it throws an `ArgumentError` if the character is invalid. **Note** that, unfortunately, other languages are not supported by the underlying GLFW library itself.
+
+The `special` overload retrieves any key on a standard *US QWERTY* keyboard which *does not* produce a character, such as the *escape*, *print screen*, arrow keys, or *enter* key. Following is a full list of supported special characters:
+
+* Arrow keys (`:up`, `:down`, `:left`, `:right`)
+* F keys (`:f1`, `:f2`, ..., `:f25`)
+* Left/Right `shift`, `control`, `alt`, `super`, prefixed with `:left_`/`:l`/`:right_`/`:r` respectively
+* Numpad keys: `:add`, `:decimal`, `:divide`, `:keypad_enter`, `:keypad_equal`, `:multiply`, `:subtract`
+* `:capslock`, `:end`, `:enter`, `:escape`/`:esc`, `:home`, `:menu`, `:numlock`, `:pagedown`, `:pageup`, `:pause`, `:print`/`:printscreen`, `:scrolllock`, `:space`, `:world1`, `:world2`
+
+### Events
+The following key input related events exist. One hooks into these by specializing on `ID` in `::Window{ID}`, as passed to `window(:ID, ...)`.
+
+| Event | Trigger |
+| --- | --- |
+| `on_key_press(::Window, ::Key, scancode::Integer, modifiers::ModifierKey)` | Triggered when a key is pressed down. |
+| `on_key_release(::Window, ::Key, scancode::Integer, modifiers::ModifierKey)` | Triggered when a key is released. |
+| `on_key_repeat(::Window, ::Key, scancode::Integer, modifiers::ModifierKey)` | Triggered when a key is held down and trigger's the OS' repeat. |
+| `on_receive_char(::Window, ::Char)` | Triggered when a key stroke produces a unicode character. |
 
 ## Mouse Input
 *TODO*
