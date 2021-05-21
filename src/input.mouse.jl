@@ -14,6 +14,7 @@ export MouseButton
 struct MouseButton
     idx::Int32
     function MouseButton(idx)
+        idx = idx-1
         if idx ∉ 0:7
             throw(ArgumentError("GLFW only supports mouse buttons 0:7; given $idx"))
         end
@@ -22,9 +23,9 @@ struct MouseButton
 end
 # Using Ident{name} here because it allows injecting additional custom names.
 MouseButton(name::Symbol) = MouseButton(Ident{name}())
-MouseButton(::Ident{:left}) = MouseButton(0)
-MouseButton(::Ident{:right}) = MouseButton(1)
-MouseButton(::Ident{:middle}) = MouseButton(2)
+MouseButton(::Ident{:left}) = MouseButton(1)
+MouseButton(::Ident{:right}) = MouseButton(2)
+MouseButton(::Ident{:middle}) = MouseButton(3)
 
 export Mouse
 struct Mouse
