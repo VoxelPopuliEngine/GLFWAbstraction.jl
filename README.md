@@ -1,6 +1,8 @@
 # GLFWAbstraction.jl
 Abstraction layer for [GLFW.jl](https://github.com/JuliaGL/GLFW.jl).
 
+**Call to Action:** I'd gladly appreciate some help with the documentation. :) There's only so much you can do with markdown. A proper website would help readability and maneuverability of the documentation a lot, but as a sole developer working on a couple very ambitious projects, time is a scarce luxury.
+
 # Mission
 *GLFWAbstraction* is designed to provide a more Julia-native and partly functional experience to working with the [GLFW](https://www.glfw.org/) library.
 
