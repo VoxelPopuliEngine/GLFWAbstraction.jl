@@ -75,7 +75,7 @@ end
     @set shouldclose = GLFW.SetWindowShouldClose(self.handle, value)
     
     @get visible = GLFW.GetWindowAttrib(self.handle, GLFW.VISIBLE)
-    @set visible = if visible; GLFW.ShowWindow(self.handle) else; GLFW.HideWindow(self.handle) end
+    @set visible = if value; GLFW.ShowWindow(self.handle) else; GLFW.HideWindow(self.handle) end
     
     # Setters Only
     @set aspect_ratio = set_aspect_ratio(self, value)
