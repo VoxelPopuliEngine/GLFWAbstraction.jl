@@ -2,7 +2,7 @@
 # Window built on GLFW library
 # -----
 # Licensed under MIT License
-using ExtraFun
+using KirUtil
 using GenerateProperties
 using GLFW
 
@@ -108,7 +108,7 @@ function Base.close(wnd::Window)
     wnd.handle = nothing
 end
 
-ExtraFun.use(wnd::Window) = (GLFW.MakeContextCurrent(wnd.handle); nothing)
+KirUtil.use(wnd::Window) = (GLFW.MakeContextCurrent(wnd.handle); nothing)
 
 monitor(wnd::Window) = monitor(GLFW.GetWindowMonitor(wnd.handle))
 monitor(wnd::Window, monitor::Monitor, refresh_rate::Integer) = GLFW.SetWindowMonitor(wnd.handle, monitor.handle, 0, 0, size(wnd)..., refresh_rate)

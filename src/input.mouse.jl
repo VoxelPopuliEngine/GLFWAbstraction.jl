@@ -5,7 +5,7 @@
 # -----
 # Licensed under MIT License
 using GLFW
-using ExtraFun
+using KirUtil
 
 export CursorMode, CursorDisabled, CursorHidden, CursorNormal
 @enum CursorMode CursorDisabled = GLFW.CURSOR_DISABLED CursorHidden = GLFW.CURSOR_HIDDEN CursorNormal = GLFW.CURSOR_NORMAL

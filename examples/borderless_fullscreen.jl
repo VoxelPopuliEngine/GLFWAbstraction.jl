@@ -5,7 +5,7 @@
 using Pkg
 Pkg.activate(".")
 
-using ExtraFun
+using KirUtil
 using GLFWAbstraction
 
 let vidmode = videomode(monitor(1))

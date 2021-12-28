@@ -5,7 +5,7 @@
 using Pkg
 Pkg.activate(".")
 
-using ExtraFun
+using KirUtil
 using GLFWAbstraction
 
 GLFWAbstraction.on_window_move(::Window{:mywnd}, posx::Integer, posy::Integer) = println("window moved to $posx, $posy")

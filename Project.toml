@@ -5,13 +5,13 @@ version = "0.2.1"
 
 [deps]
 BitFlags = "d1d4a3ce-64b1-5f1a-9ba4-7e7e69966f35"
-ExtraFun = "963d7961-7533-4a80-bf6b-d3653d506006"
 GLFW = "f7f18e0c-5ee9-5ccd-a5bf-e8befd85ed98"
 GenerateProperties = "ad744131-fa5b-4912-8d03-4395d7e5240b"
+KirUtil = "35055d32-6816-4a65-8aeb-d6e3aca393e8"
 
 [compat]
 BitFlags = "0.1.3"
-ExtraFun = "1.5.2"
 GLFW = "3.4.1"
 GenerateProperties = "0.1"
 julia = "1.6"
+KirUtil = "0.1.0"
