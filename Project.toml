@@ -1,7 +1,7 @@
 name = "GLFWAbstraction"
 uuid = "b4519675-ec9c-4dd5-a759-fbb42bea0e46"
 authors = ["Kiruse <contact@kiruse.dev>"]
-version = "0.2.1"
+version = "0.2.2"
 
 [deps]
 BitFlags = "d1d4a3ce-64b1-5f1a-9ba4-7e7e69966f35"
